@@ -1,4 +1,4 @@
-package ENUM;
+package Model.ENUM;
 
 public enum BotDifficultyLevel {
     EASY, MEDIUM, HARD;

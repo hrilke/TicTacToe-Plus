@@ -1,4 +1,4 @@
-package ENUM;
+package Model.ENUM;
 
 public enum GameStatus {
     IN_PROGRESS,
