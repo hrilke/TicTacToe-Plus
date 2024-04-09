@@ -8,11 +8,18 @@ public class Cell {
     private CellState cellState;
     private Player player;
 
+    public Cell(int i, int j) {
+        this.row = i;
+        this.col = j;
+        this.cellState = CellState.EMPTY;
+        this.player = null;
+    }
+
     public void displayCell(){
-        if (this.cellState == CellState.EMPTY) {
+        if (player == null) {
             System.out.print("| |");
         } else {
-            System.out.print("|" + this.player.getSymbol() + "|");
+            System.out.print("|" + player.getSymbol() + "|");
         }
     }
 

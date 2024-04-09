@@ -1,17 +1,34 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
     private int size;
-
     private List<List<Cell>> matrix;
 
-    public void displayBoard(Board board) {
-        for (int i = 0 ; i < board.size; i++) {
-            for (int j = 0; j < board.size; j++) {
-                //INCOMPLETE
+    public Board(int size) {
+        this.size = size;
+        matrix = new ArrayList<>();
+
+        for (int i = 0 ; i < size; i++) {
+
+            matrix.add(new ArrayList<>());
+
+            for (int j = 0; j < size; j++) {
+                matrix.get(i).add(new Cell(i,j));
             }
+        }
+    }
+
+    public void displayBoard() {
+        for (int i = 0; i < size; i++) {
+            List<Cell> cells = matrix.get(i);
+
+            for (Cell cell : cells){
+                cell.displayCell();
+            }
+            System.out.println();
         }
     }
 
@@ -23,11 +40,11 @@ public class Board {
         this.size = size;
     }
 
-    public List<List<Cell>> getCells() {
+    public List<List<Cell>> getMatrix() {
         return matrix;
     }
 
-    public void setCells(List<List<Cell>> cells) {
-        this.matrix = cells;
+    public void setMatrix(List<List<Cell>> matrix) {
+        this.matrix = matrix;
     }
 }
