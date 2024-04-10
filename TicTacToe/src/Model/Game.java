@@ -1,5 +1,6 @@
 package Model;
 
+import Exceptions.InvalidBoardSizeException;
 import Exceptions.InvalidBotCountException;
 import Exceptions.InvalidPlayerCountException;
 import Exceptions.InvalidPlayerSymbolsException;
@@ -21,7 +22,7 @@ public class Game {
     private WinningStrategy winningStrategy;
 
 
-    private Game(Board currentBoard, List<Player> players, WinningStrategy winningStrategy {
+    private Game(Board currentBoard, List<Player> players, WinningStrategy winningStrategy) {
         this.currentBoard = currentBoard;
         this.players = players;
         this.moves = new ArrayList<>();
@@ -32,7 +33,7 @@ public class Game {
 
     }
 
-    public Builder builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
@@ -52,6 +53,38 @@ public class Game {
         this.players = players;
     }
 
+    public List<Move> getMoves() {
+        return moves;
+    }
+
+    public void setMoves(List<Move> moves) {
+        this.moves = moves;
+    }
+
+    public List<Board> getBoardsStates() {
+        return boardsStates;
+    }
+
+    public void setBoardsStates(List<Board> boardsStates) {
+        this.boardsStates = boardsStates;
+    }
+
+    public int getNumberOfSymbols() {
+        return numberOfSymbols;
+    }
+
+    public void setNumberOfSymbols(int numberOfSymbols) {
+        this.numberOfSymbols = numberOfSymbols;
+    }
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
+    }
+
+    public void setGameStatus(GameStatus gameStatus) {
+        this.gameStatus = gameStatus;
+    }
+
     public WinningStrategy getWinningStrategy() {
         return winningStrategy;
     }
@@ -60,46 +93,46 @@ public class Game {
         this.winningStrategy = winningStrategy;
     }
 
-
-
     public static class Builder {
-
+        private int dimension;
         private Board currentBoard;
-
         private List<Player> players;
-
         private WinningStrategy winningStrategy;
 
 
-
-
-
+        public Builder setDimension(int dimension){
+            this.dimension = dimension;
+            return this;
+        }
         public Builder setCurrentBoard(Board currentBoard) {
             this.currentBoard = currentBoard;
             return this;
         }
-
         public Builder setPlayers(List<Player> players) {
             this.players = players;
             return this;
         }
-
         public Builder setWinningStrategy(WinningStrategy winningStrategy) {
             this.winningStrategy = winningStrategy;
             return this;
         }
 
 
-
         public Game build() {
             validate();
-            return null;
+            return new Game(new Board(dimension), players, winningStrategy);
         }
 
         private void validate() {
             validatePlayerCount();
             validateBotCount();
             validateSymbols();
+            validateDimension();
+        }
+        private void validateDimension() {
+            if (dimension < 3 || dimension > 10 ){
+                throw new InvalidBoardSizeException("Dimension for board is not valid");
+            }
         }
 
         private void validateSymbols() {
