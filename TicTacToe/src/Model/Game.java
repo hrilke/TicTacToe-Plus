@@ -159,7 +159,7 @@ public class Game {
         private void validatePlayerCount() {
             // if bot present valid player count will be n-2
             // if bot not present, valid player count will be n-1
-            if (players.size() < currentBoard.getSize()- 2 || players.size() >= currentBoard.getSize()) {
+            if (players.size() < dimension- 2 || players.size() >= dimension) {
                 throw new InvalidPlayerCountException("Player count should be n-1 || n-2 as per board size");
             }
 

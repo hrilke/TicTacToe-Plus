@@ -13,7 +13,7 @@ public class Player {
     private PlayerType playerType;
     private int id;
 
-    public Player(){}
+
     public Player(String name, char symbol, PlayerType playerType, int id) {
         this.name = name;
         this.symbol = symbol;

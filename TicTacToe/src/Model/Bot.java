@@ -2,6 +2,7 @@ package Model;
 
 import Model.ENUM.BotDifficultyLevel;
 import Model.ENUM.PlayerType;
+import Service.BotPlayingStrategy.BotPlayingStrategyFactory;
 
 public class Bot extends Player{
 
@@ -14,6 +15,6 @@ public class Bot extends Player{
 
     @Override
     public Move makeMove(Board board) {
-        return super.makeMove(board);
+        return BotPlayingStrategyFactory.getBotPlayingStrategy().makeMove(board,this);
     }
 }

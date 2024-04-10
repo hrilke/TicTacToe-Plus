@@ -56,7 +56,7 @@ public class OrderOneWinningStrategy implements WinningStrategy {
     }
     private boolean checkHashMap(HashMap<Character,Integer> map, char symbol) {
         int count = map.compute(symbol, (key, value) -> (value == null) ? 1 : value + 1);
-        return count == dimension - 1;
+        return count == dimension;
     }
 
     private boolean checkCorners(char symbol) {
