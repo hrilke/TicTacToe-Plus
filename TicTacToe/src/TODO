@@ -3,3 +3,4 @@
 3. Implement Draw Strategy before all moves played.
 4. Winning Strategy variation O(N) and O(N2)
 5. Bot PLaying Strategy with shuffle and diagonals only.
+6. Complete class diagram post project completion and Update readme doc.
