@@ -54,12 +54,12 @@ public class Player {
         System.out.println("Enter the column for the target cell");
         int col = sc.nextInt();
 
-        if (row > board.getSize() || row < 0 || col > board.getSize() || col < 0) {
-            throw new TargetOutOfBoundException(" Please enter valid target row and col");
+        if (row >= board.getSize() || row < 0 || col >= board.getSize() || col < 0) {
+            throw new TargetOutOfBoundException("Please enter valid target row and col!");
         }
         Cell cell = board.getMatrix().get(row).get(col);
         if (cell.getCellState().equals(CellState.FILLED)) {
-            throw new InvalidTargetException("The target i already filled ");
+            throw new InvalidTargetException("The target is already filled!");
         }
 
         cell.setCellState(CellState.FILLED);

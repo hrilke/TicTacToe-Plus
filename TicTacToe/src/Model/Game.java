@@ -141,7 +141,7 @@ public class Game {
                 symbols.add(players.get(i).getSymbol());
             }
             if (symbols.size() != players.size()) {
-                throw new InvalidPlayerSymbolsException("Symbol for each player has to be UNIQUE");
+                throw new InvalidPlayerSymbolsException("This symbol is already taken by other player");
             }
         }
 

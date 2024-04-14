@@ -48,6 +48,7 @@ public class Main {
             gameController.displayBoard(game);
             playerIndex++;
             playerIndex = playerIndex % players.size();
+            System.out.println("Your Turn "+players.get(playerIndex).getName());
             Move movePlayed = gameController.executeMove(game,players.get(playerIndex));
             Player winner = gameController.checkWinner(game, movePlayed);
             if (winner != null) {

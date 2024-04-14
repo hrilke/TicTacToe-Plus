@@ -1,0 +1,5 @@
+1. Implement UNDO Strategy upto 1 move from human players only.
+2. Implement Replay of Game after winner or draw.
+3. Implement Draw Strategy before all moves played.
+4. Winning Strategy variation O(N) and O(N2)
+5. Bot PLaying Strategy with shuffle and diagonals only.
