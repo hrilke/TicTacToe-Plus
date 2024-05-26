@@ -1,10 +1,10 @@
 package Service.WinningStrategy;
 
 import Model.Board;
-import Model.Cell;
+
 import Model.Move;
 import Model.Player;
-import Service.WinningStrategy.WinningStrategy;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,24 +12,24 @@ import java.util.List;
 
 public class OrderOneWinningStrategy implements WinningStrategy {
 
-    private int dimension;
+    private final int dimension;
 
-    private List<HashMap<Character,Integer>> rowHashMapList;
+    private final List<HashMap<Character,Integer>> rowHashMapList;
 
-    private List<HashMap<Character, Integer>> colHashMapList;
+    private final List<HashMap<Character, Integer>> colHashMapList;
 
-    private HashMap<Character, Integer> leftdiagonalHashMap;
+    private final HashMap<Character, Integer> leftDiagonalHashMap;
 
-    private HashMap<Character,Integer> rightdiagonalHashMap;
+    private final HashMap<Character,Integer> rightDiagonalHashMap;
 
-    private HashMap<Character, Integer> cornersHashMap;
+    private final HashMap<Character, Integer> cornersHashMap;
 
     public OrderOneWinningStrategy(int dimension) {
         this.dimension = dimension;
         rowHashMapList = new ArrayList<>();
         colHashMapList = new ArrayList<>();
-        leftdiagonalHashMap = new HashMap<>();
-        rightdiagonalHashMap = new HashMap<>();
+        leftDiagonalHashMap = new HashMap<>();
+        rightDiagonalHashMap = new HashMap<>();
         cornersHashMap = new HashMap<>();
 
         for (int i =0; i < dimension; i++) {
@@ -45,8 +45,8 @@ public class OrderOneWinningStrategy implements WinningStrategy {
         int row = move.getCell().getRow();
         int col = move .getCell().getCol();
 
-        boolean WinnerResult = (isMoveOnleftdiagonal(row,col) && checkHashMap( leftdiagonalHashMap,symbol))
-                || (isMoveOnRightDiagonal(row,col) && checkHashMap( rightdiagonalHashMap,symbol))
+        boolean WinnerResult = (isMoveOnLeftDiagonal(row,col) && checkHashMap( leftDiagonalHashMap,symbol))
+                || (isMoveOnRightDiagonal(row,col) && checkHashMap( rightDiagonalHashMap,symbol))
                 || (isMoveInCorners(row,col) && checkCorners(symbol))
                 || checkHashMap(rowHashMapList.get(row),symbol)
                 || checkHashMap(colHashMapList.get(col),symbol);
@@ -75,7 +75,7 @@ public class OrderOneWinningStrategy implements WinningStrategy {
         return row + col == dimension - 1;
     }
 
-    private boolean isMoveOnleftdiagonal(int row, int col) {
+    private boolean isMoveOnLeftDiagonal(int row, int col) {
         return row == col;
     }
 

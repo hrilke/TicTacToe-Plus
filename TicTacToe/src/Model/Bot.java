@@ -8,13 +8,16 @@ public class Bot extends Player{
 
     BotDifficultyLevel level;
 
-    public Bot(BotDifficultyLevel level) {
-        super("JARVIS", '@', PlayerType.BOT, 0 );
+    public Bot() {
+        super("JARVIS", '@', PlayerType.BOT, 0);
+    }
+
+    public void setLevel(BotDifficultyLevel level) {
         this.level = level;
     }
 
     @Override
     public Move makeMove(Board board) {
-        return BotPlayingStrategyFactory.getBotPlayingStrategy().makeMove(board,this);
+        return BotPlayingStrategyFactory.getBotPlayingStrategy(level).makeMove(board,this);
     }
 }

@@ -21,31 +21,15 @@ public class Player {
         this.id = id;
     }
 
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
     public String getName() {
         return name;
-    }
-    public void setName(String name) {
-        this.name = name;
     }
     public char getSymbol() {
         return symbol;
     }
-    public void setSymbol(char symbol) {
-        this.symbol = symbol;
-    }
     public PlayerType getPlayerType() {
         return playerType;
     }
-    public void setPlayerType(PlayerType playerType) {
-        this.playerType = playerType;
-    }
-
 
     public Move makeMove(Board board) {
         Scanner sc = new Scanner(System.in);
@@ -68,7 +52,4 @@ public class Player {
         return new Move(cell, this);
 
     }
-
-
-
 }

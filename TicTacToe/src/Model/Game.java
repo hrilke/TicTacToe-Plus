@@ -21,7 +21,6 @@ public class Game {
     private GameStatus gameStatus;
     private WinningStrategy winningStrategy;
 
-
     private Game(Board currentBoard, List<Player> players, WinningStrategy winningStrategy) {
         this.currentBoard = currentBoard;
         this.players = players;

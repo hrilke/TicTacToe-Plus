@@ -14,9 +14,6 @@ public class Move {
         return cell;
     }
 
-    public void setCell(Cell cell) {
-        this.cell = cell;
-    }
 
     public Player getPlayer() {
         return player;

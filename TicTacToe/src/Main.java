@@ -6,9 +6,7 @@ import Model.ENUM.PlayerType;
 import Model.Game;
 import Model.Move;
 import Model.Player;
-import Service.BotPlayingStrategy.EasyBotPlayingStrategy;
 import Service.WinningStrategy.WinningStrategyName;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,8 +24,20 @@ public class Main {
         int noOfPlayers = dimension - 1;
         System.out.println(" Do you want Bot int the game Y or N");
         String botAns = sc.next();
+
         if (botAns.equalsIgnoreCase("Y")){
-            Player bot = new Bot(BotDifficultyLevel.EASY);
+            System.out.printf("Select and Type Number for Bot Difficulty" +
+                                "%n1 : EASY" +
+                                "%n2 : MEDIUM" +
+                                "%n3 : HARD");
+            System.out.println();
+            int level = sc.nextInt();
+            Bot bot = new Bot();
+            switch (level) {
+                case 1 -> bot.setLevel(BotDifficultyLevel.EASY);
+                case 2 -> bot.setLevel(BotDifficultyLevel.MEDIUM);
+                case 3 -> bot.setLevel(BotDifficultyLevel.HARD);
+            }
             players.add(bot);
             noOfPlayers--;
         }
