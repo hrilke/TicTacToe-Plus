@@ -6,6 +6,15 @@ import java.util.List;
 public class Board {
     private int size;
     private List<List<Cell>> matrix;
+    private Move lastMove;
+
+    public Move getLastMove() {
+        return lastMove;
+    }
+
+    public void setLastMove(Move lastMove) {
+        this.lastMove = lastMove;
+    }
 
     public Board(int size) {
         this.size = size;
