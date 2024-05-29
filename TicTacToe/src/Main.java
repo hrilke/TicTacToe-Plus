@@ -60,6 +60,7 @@ public class Main {
             playerIndex = playerIndex % players.size();
             System.out.println("Your Turn "+players.get(playerIndex).getName());
             Move movePlayed = gameController.executeMove(game,players.get(playerIndex));
+            game.getCurrentBoard().setLastMove(movePlayed);
             Player winner = gameController.checkWinner(game, movePlayed);
             if (winner != null) {
                 System.out.println("Winner is :" + winner.getName());
