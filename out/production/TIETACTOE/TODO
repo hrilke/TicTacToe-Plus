@@ -1,6 +1,0 @@
-1. Implement UNDO Strategy upto 1 move from human players only.
-2. Implement Replay of Game after winner or draw.
-3. Implement Draw Strategy before all moves played. (Extra feature)
-4. Winning Strategy variation O(N) and O(N2)
-5. Bot PLaying Strategy testing and correctness.
-6. Complete class diagram post project completion and Update readme doc.
