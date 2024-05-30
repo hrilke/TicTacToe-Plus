@@ -2,13 +2,9 @@ package Service.BotPlayingStrategy;
 import Exceptions.GameOverException;
 import Model.Board;
 import Model.Cell;
-
 import Model.ENUM.CellState;
 import Model.Move;
 import Model.Player;
-
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,20 +13,13 @@ import java.util.List;
 
 public class HardBotPlayingStrategy implements BotPlayingStrategy{
     private static int matrixSize;
-
     private static List<HashMap<Character,Integer>> rowHashMapList;
-
     private static List<HashMap<Character, Integer>> colHashMapList;
-
     private static HashMap<Character, Integer> leftDiagonalHashMap;
-
     private static HashMap<Character,Integer> rightDiagonalHashMap;
-
     private static  HashMap<Character, Integer> cornersHashMap;
-
     private static Cell possibleWinner;
-
-    public static void initializeHashMaps(int dimension) {
+    private static void initializeHashMaps(int dimension) {
         matrixSize = dimension;
         rowHashMapList = new ArrayList<>();
         colHashMapList = new ArrayList<>();
@@ -43,45 +32,44 @@ public class HardBotPlayingStrategy implements BotPlayingStrategy{
             colHashMapList.add(new HashMap<>());
         }
     }
-    private static void updateCheckHashMap(List<List<Cell>> matrix,Move lastMove) {
+    private static void updateCheckHashMap(Board board) {
+        Move lastMove = board.getLastMove();
         int row = lastMove.getCell().getRow();
         int col = lastMove.getCell().getCol();
         char symbol = lastMove.getPlayer().getSymbol();
 
-        while (possibleWinner != null) {
-            if (isMoveInCorners(row, col)) {
+
+            if (isMoveInCorners(row,col)) {
                 int count = cornersHashMap.compute(symbol, (key, value) -> (value == null) ? 1 : value + 1);
                 if (count == 3) {
-                    cornerMove(matrix);
-                    break;
+                    cornerMove(board);
                 }
             } else if (isMoveOnRightDiagonal(row, col)) {
                 int count = rightDiagonalHashMap.compute(symbol, (key, value) -> (value == null) ? 1 : value + 1);
                 if (count == matrixSize - 1) {
-                    rightDiagonalMove(matrix);
-                    break;
+                    rightDiagonalMove(board);
                 }
             } else if (isMoveOnLeftDiagonal(row, col)) {
                 int count = leftDiagonalHashMap.compute(symbol, (key, value) -> (value == null) ? 1 : value + 1);
                 if (count == matrixSize - 1) {
-                    leftDiagonalMove(matrix);
-                    break;
+                    leftDiagonalMove(board);
                 }
-            } else {
+            }
                 HashMap<Character,Integer> rowMap = rowHashMapList.get(row);
                 int rowCount = rowMap.compute(symbol, (key, value) -> (value == null) ? 1 : value + 1);
                 if (rowCount == matrixSize - 1) {
-                    checkRowHashMap(row,matrix);
+                    checkRowHashMap(row,board);
                 }
-                HashMap<Character,Integer> colMap = colHashMapList.get(row);
-                int colCount = rowMap.compute(symbol, (key, value) -> (value == null) ? 1 : value + 1);
+                HashMap<Character,Integer> colMap = colHashMapList.get(col);
+                int colCount = colMap.compute(symbol, (key, value) -> (value == null) ? 1 : value + 1);
                 if (colCount == matrixSize - 1) {
-                    checkColHashMap(col,matrix);
+                    checkColHashMap(col,board);
                 }
-            }
-        }
+
+
     }
-    private static void checkRowHashMap(int row, List<List<Cell>> matrix) {
+    private static void checkRowHashMap(int row, Board board) {
+        List<List<Cell>> matrix = board.getMatrix();
         for (int j = 0; j < matrixSize; j++) {
             if (matrix.get(row).get(j).getCellState().equals(CellState.EMPTY)) {
                 possibleWinner = new Cell(row, j);
@@ -89,7 +77,8 @@ public class HardBotPlayingStrategy implements BotPlayingStrategy{
             }
         }
     }
-    private static void checkColHashMap(int col, List<List<Cell>> matrix) {
+    private static void checkColHashMap(int col, Board board) {
+        List<List<Cell>> matrix = board.getMatrix();
         for (int i = 0 ; i < matrixSize; i++) {
             if (matrix.get(i).get(col).getCellState().equals(CellState.EMPTY)) {
                 possibleWinner = new Cell(i, col);
@@ -99,13 +88,14 @@ public class HardBotPlayingStrategy implements BotPlayingStrategy{
     }
     @Override
     public Move makeMove(Board board, Player jarvis) {
+        possibleWinner = null;
         List<List<Cell>> matrix = board.getMatrix();
-        if (!checkFirstMove(matrix)) {
-            HardBotPlayingStrategy.updateCheckHashMap(matrix,board.getLastMove());
+        if (colHashMapList == null) HardBotPlayingStrategy.initializeHashMaps(matrix.size());
+        if (!checkFirstMove(board)) {
+            HardBotPlayingStrategy.updateCheckHashMap(board);
         }
-        if (checkFirstMove(matrix)) {
-            HardBotPlayingStrategy.initializeHashMaps(matrix.size());
-            Cell selectedCell = getFirstMove(matrix.size());
+        if (checkFirstMove(board)) {
+            Cell selectedCell = getFirstMove(board);
             board.getMatrix().get(selectedCell.getRow()).get(selectedCell.getCol()).setCellState(CellState.FILLED);
             board.getMatrix().get(selectedCell.getRow()).get(selectedCell.getCol()).setPlayer(jarvis);
             return new Move(board.getMatrix().get(selectedCell.getRow()).get(selectedCell.getCol()), jarvis);
@@ -114,6 +104,31 @@ public class HardBotPlayingStrategy implements BotPlayingStrategy{
             board.getMatrix().get(possibleWinner.getRow()).get(possibleWinner.getCol()).setCellState(CellState.FILLED);
             board.getMatrix().get(possibleWinner.getRow()).get(possibleWinner.getCol()).setPlayer(jarvis);
             return new Move(board.getMatrix().get(possibleWinner.getRow()).get(possibleWinner.getCol()), jarvis);
+        }
+        else if (possibleWinner == null) {
+            for (int i = 0; i < matrixSize; i++) {
+                for (int j = 0; j < matrixSize; j++) {
+                    if ((i == j) && (i+j == matrixSize-1)) {
+                        if (matrix.get(i).get(j).getCellState().equals(CellState.EMPTY)) {
+                            board.getMatrix().get(i).get(j).setCellState(CellState.FILLED);
+                            board.getMatrix().get(i).get(j).setPlayer(jarvis);
+                            return new Move(board.getMatrix().get(i).get(j), jarvis);
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < matrixSize; i++) {
+                for (int j = 0; j < matrixSize; j++) {
+                    if ((i == j) || (i+j == matrixSize-1)) {
+                        if (matrix.get(i).get(j).getCellState().equals(CellState.EMPTY)) {
+                            board.getMatrix().get(i).get(j).setCellState(CellState.FILLED);
+                            board.getMatrix().get(i).get(j).setPlayer(jarvis);
+                            return new Move(board.getMatrix().get(i).get(j), jarvis);
+                        }
+                    }
+                }
+            }
         }
         else {
             for (int i = 0; i < matrix.size(); i++) {
@@ -128,7 +143,8 @@ public class HardBotPlayingStrategy implements BotPlayingStrategy{
         }
         throw new GameOverException("No target cell left to play");
     }
-    public boolean checkFirstMove(List<List<Cell>> matrix) {
+    private boolean checkFirstMove(Board board) {
+        List<List<Cell>> matrix = board.getMatrix();
         for (int i = 0; i < matrix.size(); i++) {
             for (int j = 0; j < matrix.size(); j++) {
                 if (matrix.get(i).get(i).getCellState().equals(CellState.FILLED)) return false;
@@ -136,21 +152,26 @@ public class HardBotPlayingStrategy implements BotPlayingStrategy{
         }
         return true;
     }
-    public Cell getFirstMove(int size) {
+    private Cell getFirstMove(Board board) {
+        int size = board.getSize();
+        List<List<Cell>> matrix = board.getMatrix();
         ArrayList<Cell> cells = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 if ((i == j || i+j == size-1) && !(i == j && i+j == size-1)) {
-                    cells.add(new Cell(i,j));
+                    if (matrix.get(i).get(j).getCellState().equals(CellState.EMPTY)) {
+                        cells.add(new Cell(i,j));
+                    }
                 }
             }
         }
         Collections.shuffle(cells);
         return cells.get(0);
     }
-    private static void leftDiagonalMove(List<List<Cell>> matrix) {
+    private static void leftDiagonalMove(Board board) {
+        List<List<Cell>> matrix = board.getMatrix();
         for (int i = 0 ; i < matrixSize; i++) {
-            for (int j = 0; j < matrixSize; i++) {
+            for (int j = 0; j < matrixSize; j++) {
                 if (i == j) {
                     if (matrix.get(i).get(j).getCellState().equals(CellState.EMPTY)) {
                         possibleWinner = new Cell(i,j);
@@ -160,9 +181,10 @@ public class HardBotPlayingStrategy implements BotPlayingStrategy{
             }
         }
     }
-    private static void rightDiagonalMove(List<List<Cell>> matrix) {
+    private static void rightDiagonalMove(Board board) {
+        List<List<Cell>> matrix = board.getMatrix();
         for (int i = 0 ; i < matrixSize; i++) {
-            for (int j = 0; j < matrixSize; i++) {
+            for (int j = 0; j < matrixSize; j++) {
                 if (i + j == matrixSize-1) {
                     if (matrix.get(i).get(j).getCellState().equals(CellState.EMPTY)) {
                         possibleWinner = new Cell(i,j);
@@ -172,7 +194,8 @@ public class HardBotPlayingStrategy implements BotPlayingStrategy{
             }
         }
     }
-    private static void cornerMove(List<List<Cell>> matrix) {
+    private static void cornerMove(Board board) {
+        List<List<Cell>> matrix = board.getMatrix();
         int n = matrixSize;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {

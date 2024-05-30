@@ -53,14 +53,20 @@ public class Main {
         Collections.shuffle(players);
         Game game = gameController.createGame(dimension,players, WinningStrategyName.ORDER_1_WINNINGSTRATEGY);
         int playerIndex = -1;
+        boolean boarddisplay = true;
         while(game.getGameStatus().equals(GameStatus.IN_PROGRESS)) {
-            System.out.println("Current Board Status");
-            gameController.displayBoard(game);
+            if (boarddisplay) {
+                System.out.println("Current Board Status");
+                gameController.displayBoard(game);
+                boarddisplay = false;
+            }
             playerIndex++;
             playerIndex = playerIndex % players.size();
             System.out.println("Your Turn "+players.get(playerIndex).getName());
             Move movePlayed = gameController.executeMove(game,players.get(playerIndex));
             game.getCurrentBoard().setLastMove(movePlayed);
+            System.out.println("Board after move");
+            gameController.displayBoard(game);
             Player winner = gameController.checkWinner(game, movePlayed);
             if (winner != null) {
                 System.out.println("Winner is :" + winner.getName());

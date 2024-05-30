@@ -43,7 +43,7 @@ public class OrderOneWinningStrategy implements WinningStrategy {
         Player player = move.getPlayer();
         char symbol = move.getPlayer().getSymbol();
         int row = move.getCell().getRow();
-        int col = move .getCell().getCol();
+        int col = move.getCell().getCol();
 
         boolean WinnerResult = (isMoveOnLeftDiagonal(row,col) && checkHashMap( leftDiagonalHashMap,symbol))
                 || (isMoveOnRightDiagonal(row,col) && checkHashMap( rightDiagonalHashMap,symbol))
@@ -60,7 +60,7 @@ public class OrderOneWinningStrategy implements WinningStrategy {
     }
 
     private boolean checkCorners(char symbol) {
-        int count = cornersHashMap.compute(symbol, (key,value) -> (value == null) ? 1 : value +1);
+        int count = cornersHashMap.compute(symbol, (key,value) -> (value == null) ? 1 : value + 1);
         return count == 4;
     }
 
