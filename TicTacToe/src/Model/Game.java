@@ -4,6 +4,7 @@ import Exceptions.InvalidBoardSizeException;
 import Exceptions.InvalidBotCountException;
 import Exceptions.InvalidPlayerCountException;
 import Exceptions.InvalidPlayerSymbolsException;
+import Model.ENUM.CellState;
 import Model.ENUM.GameStatus;
 import Model.ENUM.PlayerType;
 import Service.WinningStrategy.WinningStrategy;
@@ -90,6 +91,16 @@ public class Game {
 
     public void setWinningStrategy(WinningStrategy winningStrategy) {
         this.winningStrategy = winningStrategy;
+    }
+
+    public boolean checkIsEmpty() {
+        List<List<Cell>> matrix = this.getCurrentBoard().getMatrix();
+        for (int i =0; i < matrix.size(); i++) {
+            for (int j = 0; j < matrix.size(); j++) {
+                if (matrix.get(i).get(j).getCellState().equals(CellState.EMPTY)) return false;
+            }
+        }
+        return true;
     }
 
     public static class Builder {

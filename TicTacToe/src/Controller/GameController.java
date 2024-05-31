@@ -1,6 +1,6 @@
 package Controller;
-
 import Model.Board;
+import Model.ENUM.CellState;
 import Model.ENUM.GameStatus;
 import Model.Game;
 import Model.Move;
@@ -35,8 +35,12 @@ public class GameController {
         return game.getWinningStrategy().checkWinner(game.getCurrentBoard(), lastPlayedMove);
     }
 
-    public Board undoMove(Game game, Move lastPlayedMove) {
-        return null;
+    public void undoMove(Game game, Move played) {
+        int i = played.getCell().getRow();
+        int j = played.getCell().getCol();
+
+        game.getCurrentBoard().getMatrix().get(i).get(j).setCellState(CellState.EMPTY);
+        game.getCurrentBoard().getMatrix().get(i).get(j).setPlayer(null);
     }
 
     public void replayGame(Game game) {
