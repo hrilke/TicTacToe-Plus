@@ -44,7 +44,11 @@ public class GameController {
     }
 
     public void replayGame(Game game) {
+        List<Board> replayBoards = game.getBoardsStates();
 
+        for (Board board : replayBoards) {
+            board.displayBoard();
+        }
     }
 
 }

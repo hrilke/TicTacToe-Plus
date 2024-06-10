@@ -90,11 +90,21 @@ public class Main {
                 System.out.println("Winner is :" + winner.getName());
                 System.out.println("final board ");
                 gameController.displayBoard(game);
+                System.out.printf("Would you like to replay the game ?" +
+                        "%n1 : WATCH REPLAY" +
+                        "%n2 : CONTINUE");
+                int replay = sc.nextInt();
+                if (replay == 1) gameController.replayGame(game);
                 break;
             } if (winner == null && game.checkIsEmpty()) {
                 System.out.println("ITS A TIE");
                 System.out.println("final board ");
                 gameController.displayBoard(game);
+                System.out.printf("Would you like to replay the game ?" +
+                        "%n1 : WATCH REPLAY" +
+                        "%n2 : CONTINUE");
+                int replay = sc.nextInt();
+                if (replay == 1) gameController.replayGame(game);
                 break;
             }
         }
