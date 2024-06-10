@@ -29,6 +29,15 @@ public class Board {
             }
         }
     }
+    public Board(List<List<Cell>> matrix) {
+        this.matrix = new ArrayList<>();
+        for (int i = 0; i < matrix.size(); i++) {
+            this.matrix.add(new ArrayList<>());
+            for (int j = 0; j < matrix.size(); j++) {
+                this.matrix.get(i).add(matrix.get(i).get(j));
+            }
+        }
+    }
 
     public void displayBoard() {
         for (int i = 0; i < size; i++) {
@@ -49,4 +58,14 @@ public class Board {
         return matrix;
     }
 
+
+    public Board deepCopy(Board board) {
+        Board newBoard = new Board(board.getSize());
+        for (int i = 0; i < board.getSize(); i++) {
+            for (int j = 0; j < board.getSize(); j++) {
+                newBoard.getMatrix().get(i).set(j,board.getMatrix().get(i).get(j).deepCopy(board.getMatrix().get(i).get(j)));
+            }
+        }
+        return newBoard;
+    }
 }

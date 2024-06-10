@@ -85,6 +85,7 @@ public class Main {
             }
             System.out.println("Board after move");
             gameController.displayBoard(game);
+            gameController.saveBoard(game);
             Player winner = gameController.checkWinner(game, movePlayed);
             if (winner != null) {
                 System.out.println("Winner is :" + winner.getName());
@@ -93,8 +94,10 @@ public class Main {
                 System.out.printf("Would you like to replay the game ?" +
                         "%n1 : WATCH REPLAY" +
                         "%n2 : CONTINUE");
+                System.out.println();
                 int replay = sc.nextInt();
-                if (replay == 1) gameController.replayGame(game);
+                String name = winner.getName();
+                if (replay == 1) gameController.replayGame(game, name);
                 break;
             } if (winner == null && game.checkIsEmpty()) {
                 System.out.println("ITS A TIE");
@@ -103,8 +106,10 @@ public class Main {
                 System.out.printf("Would you like to replay the game ?" +
                         "%n1 : WATCH REPLAY" +
                         "%n2 : CONTINUE");
+                System.out.println();
                 int replay = sc.nextInt();
-                if (replay == 1) gameController.replayGame(game);
+                String tie = "NOBODY Its a TIE";
+                if (replay == 1) gameController.replayGame(game, tie);
                 break;
             }
         }

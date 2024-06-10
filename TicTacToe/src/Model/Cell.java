@@ -47,4 +47,11 @@ public class Cell {
     public void setPlayer(Player player) {
         this.player = player;
     }
+
+    public Cell deepCopy(Cell cell) {
+        Cell newCell = new Cell(cell.getRow(), cell.getCol());
+        newCell.setPlayer(cell.getPlayer());
+        newCell.setCellState(cell.getCellState());
+        return newCell;
+    }
 }

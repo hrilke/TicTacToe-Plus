@@ -1,10 +1,7 @@
 package Controller;
-import Model.Board;
+import Model.*;
 import Model.ENUM.CellState;
 import Model.ENUM.GameStatus;
-import Model.Game;
-import Model.Move;
-import Model.Player;
 import Service.WinningStrategy.WinningStrategyFactory;
 import Service.WinningStrategy.WinningStrategyName;
 
@@ -43,12 +40,27 @@ public class GameController {
         game.getCurrentBoard().getMatrix().get(i).get(j).setPlayer(null);
     }
 
-    public void replayGame(Game game) {
-        List<Board> replayBoards = game.getBoardsStates();
+    public void replayGame(Game game, String winner){
 
-        for (Board board : replayBoards) {
-            board.displayBoard();
-        }
+        for (int i = 0; i < game.getBoardsStates().size(); i++) {
+            System.out.println("Move No:" + (i+1));
+            List<List<Cell>> matrix = game.getBoardsStates().get(i).getMatrix();
+            for (int j = 0; j < matrix.size(); j++) {
+                for (int k = 0; k < matrix.size(); k++) {
+                    matrix.get(j).get(k).displayCell();
+                }
+                System.out.println();
+            }
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }System.out.println("Winner : "+ winner);
     }
 
+    public void saveBoard(Game game) {
+        Board newBoard = game.getCurrentBoard().deepCopy(game.getCurrentBoard());
+        game.getBoardsStates().add(newBoard);
+    }
 }

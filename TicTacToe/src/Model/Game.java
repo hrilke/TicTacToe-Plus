@@ -65,10 +65,6 @@ public class Game {
         return boardsStates;
     }
 
-    public void setBoardsStates(List<Board> boardsStates) {
-        this.boardsStates = boardsStates;
-    }
-
     public int getNumberOfSymbols() {
         return numberOfSymbols;
     }
