@@ -21,8 +21,9 @@ Replay option to analyze gameplay : Revisit Mistakes and Strategy
 
 Enhanced Winning Strategy : Player will win if aquires all four corners
     
+## Screenshots
 
-
+![User defined Board size, players, symbols](https://github.com/hrilke/TicTacToe-Plus/blob/master/photo-collage.png.png)
 
 
 ## Tech Stack
@@ -58,3 +59,4 @@ Through these learned lessons, TIC-TAC-TOE~PLUS became not only a testament to m
 ## Support
 
 For support, email dev.hrishi@outlook.com or Meassage https://twitter.com/xhrilke.
+
