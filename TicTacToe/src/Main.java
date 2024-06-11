@@ -48,7 +48,7 @@ public class Main {
             noOfPlayers--;
         }
         Collections.shuffle(players);
-        Game game = gameController.createGame(dimension,players, WinningStrategyName.ORDER_1_WINNINGSTRATEGY);
+        Game game = gameController.createGame(dimension,players, WinningStrategyName.ORDER_N_WINNINGSTRATEGY);
         int playerIndex = -1;
         boolean boarDisplay = true;
         while(game.getGameStatus().equals(GameStatus.IN_PROGRESS)) {

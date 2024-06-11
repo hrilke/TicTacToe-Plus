@@ -52,7 +52,7 @@ public class GameController {
                 System.out.println();
             }
             try {
-                Thread.sleep(2000);
+                Thread.sleep(1200);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
