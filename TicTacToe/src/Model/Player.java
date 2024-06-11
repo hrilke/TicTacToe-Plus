@@ -8,10 +8,10 @@ import Model.ENUM.PlayerType;
 import java.util.Scanner;
 
 public class Player {
-    private String name;
-    private char symbol;
-    private PlayerType playerType;
-    private int id;
+    private final String name;
+    private final char symbol;
+    private final PlayerType playerType;
+    private final int id;
 
 
     public Player(String name, char symbol, PlayerType playerType, int id) {

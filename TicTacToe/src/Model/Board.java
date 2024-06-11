@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Board {
     private int size;
-    private List<List<Cell>> matrix;
+    private final List<List<Cell>> matrix;
     private Move lastMove;
 
     public Move getLastMove() {

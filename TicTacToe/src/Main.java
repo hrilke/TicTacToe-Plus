@@ -48,14 +48,21 @@ public class Main {
             noOfPlayers--;
         }
         Collections.shuffle(players);
-        Game game = gameController.createGame(dimension,players, WinningStrategyName.ORDER_N_WINNINGSTRATEGY);
+        System.out.printf("Select and Type Number for Winning Strategy Algorithm" +
+                "%n1 : O(1) Time Complexity" +
+                "%n2 : O(N) Time Complexity");
+        int winStrategy = sc.nextInt();
+        Game game;
+        if (winStrategy == 1) game = gameController.createGame(dimension,players, WinningStrategyName.ORDER_1_WINNINGSTRATEGY);
+        else game = gameController.createGame(dimension,players, WinningStrategyName.ORDER_N_WINNINGSTRATEGY);
+
         int playerIndex = -1;
-        boolean boarDisplay = true;
+        boolean boardDisplay = true;
         while(game.getGameStatus().equals(GameStatus.IN_PROGRESS)) {
-            if (boarDisplay) {
+            if (boardDisplay) {
                 System.out.println("Current Board Status");
                 gameController.displayBoard(game);
-                boarDisplay = false;
+                boardDisplay = false;
             }
             playerIndex++;
             playerIndex = playerIndex % players.size();

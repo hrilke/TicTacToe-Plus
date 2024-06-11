@@ -17,8 +17,7 @@ public class Game {
     private Board currentBoard;
     private List<Player> players;
     private List<Move> moves;
-    private List<Board> boardsStates;
-    private int numberOfSymbols;
+    private final List<Board> boardsStates;
     private GameStatus gameStatus;
     private WinningStrategy winningStrategy;
 
@@ -27,7 +26,6 @@ public class Game {
         this.players = players;
         this.moves = new ArrayList<>();
         this.boardsStates = new ArrayList<>();
-        this.numberOfSymbols = players.size();
         this.gameStatus = GameStatus.IN_PROGRESS;
         this.winningStrategy = winningStrategy;
 
@@ -41,52 +39,20 @@ public class Game {
         return currentBoard;
     }
 
-    public void setCurrentBoard(Board currentBoard) {
-        this.currentBoard = currentBoard;
-    }
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(List<Player> players) {
-        this.players = players;
-    }
-
     public List<Move> getMoves() {
         return moves;
-    }
-
-    public void setMoves(List<Move> moves) {
-        this.moves = moves;
     }
 
     public List<Board> getBoardsStates() {
         return boardsStates;
     }
 
-    public int getNumberOfSymbols() {
-        return numberOfSymbols;
-    }
-
-    public void setNumberOfSymbols(int numberOfSymbols) {
-        this.numberOfSymbols = numberOfSymbols;
-    }
-
     public GameStatus getGameStatus() {
         return gameStatus;
     }
 
-    public void setGameStatus(GameStatus gameStatus) {
-        this.gameStatus = gameStatus;
-    }
-
     public WinningStrategy getWinningStrategy() {
         return winningStrategy;
-    }
-
-    public void setWinningStrategy(WinningStrategy winningStrategy) {
-        this.winningStrategy = winningStrategy;
     }
 
     public boolean checkIsEmpty() {
@@ -108,10 +74,6 @@ public class Game {
 
         public Builder setDimension(int dimension){
             this.dimension = dimension;
-            return this;
-        }
-        public Builder setCurrentBoard(Board currentBoard) {
-            this.currentBoard = currentBoard;
             return this;
         }
         public Builder setPlayers(List<Player> players) {
